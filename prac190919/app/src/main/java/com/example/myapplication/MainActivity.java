@@ -3,7 +3,9 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv;
     private Button btn;
     private Button switchBtn;
+    private Bitmap bit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         init();
-
+        takeScreenshot();
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Random dice = new Random();
@@ -35,11 +38,22 @@ public class MainActivity extends AppCompatActivity {
         switchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, SubActivity.class);
                 intent.putExtra("text", String.valueOf(tv.getText()));
+                intent.putExtra("img", bit);
+
                 startActivity(intent);
             }
         });
+    }
+    private void takeScreenshot() {
+            View v1 = getWindow().getDecorView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = v1.getDrawingCache();
+            v1.setDrawingCacheEnabled(false);
+
+            bit = bitmap;
     }
 
     public void init() {

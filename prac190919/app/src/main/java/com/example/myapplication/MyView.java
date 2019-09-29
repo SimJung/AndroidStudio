@@ -19,6 +19,7 @@ public class MyView extends View {
     private int paintColor = 0xFF000000;
     private Canvas drawCanvas;
     private Bitmap canvasBitmap;
+    public Bitmap bit;
 
     public MyView(Context context){
 
@@ -43,10 +44,12 @@ public class MyView extends View {
         super.onSizeChanged( w, h, oldw, oldh);
         canvasBitmap = Bitmap.createBitmap( w, h, Bitmap.Config.ARGB_8888);
         drawCanvas = new Canvas(canvasBitmap);
+        //drawCanvas = new Canvas(bit);
     }
 
     protected void onDraw(Canvas canvas) {
 
+        canvas.drawBitmap(bit, 0, 0, canvasPaint);
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
         canvas.drawPath(drawPath, drawPaint);
     }
